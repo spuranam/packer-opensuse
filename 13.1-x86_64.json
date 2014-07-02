@@ -1,0 +1,61 @@
+{
+  "builders": [
+    {
+      "accelerator": "kvm",
+      "boot_command": [
+        "<esc><enter><wait>",
+        " linux netdevice=ens3 netsetup=dhcp<wait>",
+        " install=http://download.opensuse.org/distribution/13.1/repo/oss/ insecure=1<wait>",
+        " lang=en_US autoyast=http://{{ .HTTPIP }}:{{ .HTTPPort }}/autoinst.xml<wait>",
+        " textmode=1<wait>",
+        "<enter><wait>"
+      ],
+      "boot_wait": "10s",
+      "disk_interface": "scsi",
+      "disk_size": 5000,
+      "floppy_files": [
+          "files/*"
+      ],
+      "format": "raw",
+      "headless": true,
+      "http_directory": "http",
+      "iso_checksum": "6c0d656895cbd92f34de61d98ca364ea",
+      "iso_checksum_type": "md5",
+      "iso_url": "http://download.opensuse.org/distribution/13.1/iso/openSUSE-13.1-NET-x86_64.iso",
+      "net_device": "virtio-net",
+      "output_directory": "image/13.1/x86_64/qemu",
+      "qemuargs": [
+        [
+          "-device",
+          "virtio-scsi-pci,id=scsi0"
+        ],
+        [
+          "-drive",
+          "if=none,cache=unsafe,id=drive0,discard=unmap,file=image/13.1/x86_64/qemu/opensuse-13.1-x86_64.raw"
+        ],
+        [
+          "-device",
+          "scsi-hd,bus=scsi0.0,drive=drive0"
+        ],
+        [
+          "-device",
+          "virtio-net,netdev=user.0"
+        ]
+      ],
+      "shutdown_command": "shutdown -h now",
+      "ssh_password": "build",
+      "ssh_username": "root",
+      "ssh_wait_timeout": "10000s",
+      "type": "qemu",
+      "vm_name": "opensuse-13.1-x86_64"
+    }
+  ],
+  "provisioners": [
+    {
+      "scripts": [
+        "scripts/cleanup.sh"
+      ],
+      "type": "shell"
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+images/*
+logs/*.log
+packer_cache/*
