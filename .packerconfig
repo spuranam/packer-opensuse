@@ -1,0 +1,8 @@
+{
+  "post-processors": {
+    "shell": "packer-post-processor-shell",
+    "strip": "packer-post-processor-strip",
+    "compress": "packer-post-processor-compress",
+    "squashfs": "packer-post-processor-squashfs"
+  }
+}

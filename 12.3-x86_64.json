@@ -13,9 +13,6 @@
       "boot_wait": "10s",
       "disk_interface": "scsi",
       "disk_size": 5000,
-      "floppy_files": [
-          "files/*"
-      ],
       "format": "raw",
       "headless": true,
       "http_directory": "http",
@@ -23,7 +20,7 @@
       "iso_checksum_type": "md5",
       "iso_url": "http://download.opensuse.org/distribution/12.3/iso/openSUSE-12.3-NET-x86_64.iso",
       "net_device": "virtio-net",
-      "output_directory": "images/12.3/x86_64/qemu",
+      "output_directory": "output/opensuse-12.3-x86_64-qemu",
       "qemuargs": [
         [
           "-device",
@@ -31,7 +28,7 @@
         ],
         [
           "-drive",
-          "if=none,cache=unsafe,id=drive0,discard=unmap,file=images/12.3/x86_64/qemu/opensuse-12.3-x86_64.raw"
+          "if=none,cache=unsafe,id=drive0,discard=unmap,file=output/opensuse-12.3-x86_64-qemu/opensuse-12.3-x86_64.raw"
         ],
         [
           "-device",
@@ -56,6 +53,19 @@
         "scripts/cleanup.sh"
       ],
       "type": "shell"
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "strip",
+      "keep_input_artifact": false,
+      "output": "output/opensuse-12.3-x86_64-strip/"
+    },
+    {
+      "type": "compress",
+      "format": "gzip",
+      "keep_input_artifact": false,
+      "output": "output/opensuse-12.3-x86_64-compress/"
     }
   ]
 }

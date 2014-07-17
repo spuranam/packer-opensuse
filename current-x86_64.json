@@ -3,24 +3,24 @@
     {
       "accelerator": "kvm",
       "boot_command": [
-        "<esc><enter><wait>",
-        " linux netdevice=ens3 netsetup=dhcp<wait>",
-        " install=http://download.opensuse.org/distribution/13.1/repo/oss/ insecure=1<wait>",
-        " lang=en_US autoyast=http://{{ .HTTPIP }}:{{ .HTTPPort }}/autoinst.xml<wait>",
-        " textmode=1<wait>",
-        "<enter><wait>"
+        "<enter>",
+        "<wait10>",
+        "<enter>",
+        "<wait10>",
+        "<enter>",
+        "wget http://{{ .HTTPIP }}:{{ .HTTPPort }}/install.sh -O /tmp/install.sh ; chmod +x /tmp/install.sh ; /tmp/install.sh<enter>"
       ],
-      "boot_wait": "10s",
+      "boot_wait": "5s",
       "disk_interface": "scsi",
       "disk_size": 5000,
       "format": "raw",
       "headless": true,
       "http_directory": "http",
-      "iso_checksum": "6c0d656895cbd92f34de61d98ca364ea",
-      "iso_checksum_type": "md5",
-      "iso_url": "http://download.opensuse.org/distribution/13.1/iso/openSUSE-13.1-NET-x86_64.iso",
+      "iso_checksum": "007654f3f18da66f761611c1e645fca2fb194c5b",
+      "iso_checksum_type": "sha1",
+      "iso_url": "http://mirrors.xmission.com/archlinux/iso/2014.05.01/archlinux-2014.05.01-dual.iso",
       "net_device": "virtio-net",
-      "output_directory": "output/opensuse-13.1-x86_64-qemu",
+      "output_directory": "output/archlinux-current-x86_64-qemu/",
       "qemuargs": [
         [
           "-device",
@@ -28,7 +28,7 @@
         ],
         [
           "-drive",
-          "if=none,cache=unsafe,id=drive0,discard=unmap,file=output/opensuse-13.1-x86_64-qemu/opensuse-13.1-x86_64.raw"
+          "if=none,cache=unsafe,id=drive0,discard=unmap,file=output/archlinux-current-x86_64-qemu/archlinux-current-x86_64.raw"
         ],
         [
           "-device",
@@ -39,18 +39,21 @@
           "virtio-net,netdev=user.0"
         ]
       ],
-      "shutdown_command": "shutdown -h now",
+      "shutdown_command": "systemctl poweroff",
       "ssh_password": "build",
       "ssh_username": "root",
       "ssh_wait_timeout": "10000s",
       "type": "qemu",
-      "vm_name": "opensuse-13.1-x86_64"
+      "vm_name": "archlinux-current-x86_64"
     }
   ],
   "provisioners": [
     {
       "scripts": [
-        "scripts/cleanup.sh"
+        "scripts/time.sh",
+        "scripts/ssh.sh",
+        "scripts/user.sh",
+        "scripts/clean.sh"
       ],
       "type": "shell"
     }
@@ -59,13 +62,13 @@
     {
       "type": "strip",
       "keep_input_artifact": false,
-      "output": "output/opensuse-13.1-x86_64-strip/"
+      "output": "output/archlinux-current-x86_64-strip/"
     },
     {
       "type": "compress",
       "format": "gzip",
       "keep_input_artifact": false,
-      "output": "output/opensuse-13.1-x86_64-compress/"
+      "output": "output/archlinux-current-x86_64-compress/"
     }
   ]
 }
