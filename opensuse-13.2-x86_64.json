@@ -4,22 +4,28 @@
       "accelerator": "kvm",
       "boot_command": [
         "<esc><enter><wait>",
-        "linux netsetup=dhcp lang=en_US hostname=build netdevice=ens3",
+        "linux netsetup=dhcp lang=en_US hostname=build  netdevice=eth0",
         " autoyast=http://{{.HTTPIP}}:{{.HTTPPort}}/autoinst-13.2.xml",
-        " textmode=1 insecure=1 install=http://download.opensuse.org/distribution/13.2/repo/oss/<wait><enter><wait>"
+        " textmode=1 insecure=1<wait><enter><wait>"
       ],
       "boot_wait": "10s",
       "disk_interface": "scsi",
       "disk_size": 5000,
+      "disk_cache": "unsafe",
       "format": "raw",
       "headless": true,
       "http_directory": "http",
-      "iso_checksum": "f2f0ecc6b1939d3725f22221baed237f",
+      "iso_checksum": "350b8cb014a4e342cc9a7cc9df891b99",
       "iso_checksum_type": "md5",
-      "iso_url": "http://download.opensuse.org/distribution/13.2/iso/openSUSE-13.2-NET-x86_64.iso",
+      "iso_url": "http://mirror.yandex.ru/opensuse/distribution/13.2/iso/openSUSE-13.2-DVD-x86_64.iso",
       "net_device": "virtio-net",
       "output_directory": "output/opensuse-13.2-x86_64-qemu",
+      "machine_type": "pc-i440fx-1.7",
       "qemuargs": [
+        [
+          "-m",
+          "768"
+        ],
         [
           "-device",
           "virtio-scsi-pci,id=scsi0"
@@ -37,7 +43,7 @@
           "virtio-net,netdev=user.0"
         ]
       ],
-      "shutdown_command": "shutdown -h now",
+      "shutdown_command": "",
       "ssh_password": "packer",
       "ssh_username": "root",
       "ssh_wait_timeout": "10000s",
@@ -48,16 +54,26 @@
   "provisioners": [
     {
       "scripts": [
+        "scripts/base.sh",
+        "scripts/reboot.sh"
+      ],
+      "type": "shell"
+    },
+    {
+      "scripts": [
         "scripts/cleanup.sh"
       ],
+      "pause_before": "30s",
       "type": "shell"
     }
   ],
   "post-processors": [
-    {
-      "type": "compress",
-      "format": "pgzip",
-      "output": "output/opensuse-13.1-x86_64-compress/"
-    }
+    [
+      {
+        "type": "compress",
+        "format": "pgzip",
+        "output": "output/opensuse-13.2-x86_64-compress/"
+      }
+    ]
   ]
 }
