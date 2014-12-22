@@ -10,7 +10,7 @@ build:
 	$(eval outputdir := $(CURDIR)/output/$(TPL))
 	find $(CURDIR)/output/ -maxdepth 1 -name '$(TPL)-*' -type d -print0 | xargs -0 -I {} /bin/rm -r "{}"
 	@echo building $(TPL)
-	$(foreach builder,$(builders), PACKER_LOG="yes" PACKER_CONFIG=$(CURDIR)/.packerconfig PACKER_LOG_PATH=$(CURDIR)/logs/$(TPL).log packer build -only=$(builder) $(TPL).json;)
+	$(foreach builder,$(builders), PACKER_LOG="yes" PACKER_CONFIG=$(CURDIR)/.packerconfig PACKER_LOG_PATH=$(CURDIR)/logs/$(TPL).log packer -machine-readable build -only=$(builder) $(TPL).json;)
 
 
 %:
