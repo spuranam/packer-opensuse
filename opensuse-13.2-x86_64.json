@@ -61,7 +61,8 @@
     },
     {
       "scripts": [
-        "scripts/cleanup.sh"
+        "scripts/cleanup.sh",
+        "scripts/cloudinit-config.sh"
       ],
       "pause_before": "30s",
       "type": "shell"
