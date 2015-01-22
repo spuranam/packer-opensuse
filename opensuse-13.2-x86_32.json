@@ -15,7 +15,7 @@
       "format": "raw",
       "headless": true,
       "http_directory": "http",
-      "iso_checksum": "350b8cb014a4e342cc9a7cc9df891b99",
+      "iso_checksum": "43869f9b9b944adc1b210649d3730980",
       "iso_checksum_type": "md5",
       "iso_url": "http://mirror.yandex.ru/opensuse/distribution/13.2/iso/openSUSE-13.2-DVD-i586.iso",
       "net_device": "virtio-net",
