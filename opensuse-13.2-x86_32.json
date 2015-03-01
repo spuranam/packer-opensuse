@@ -72,7 +72,7 @@
     [
       {
         "type": "compress",
-        "format": "pgzip",
+        "format": "bgzf",
         "output": "output/opensuse-13.2-x86_32-compress/"
       }
     ]
