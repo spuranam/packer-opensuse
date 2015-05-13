@@ -74,6 +74,10 @@
         "type": "compress",
         "format": "bgzf",
         "output": "output/opensuse-13.2-x86_64-compress/"
+      },
+      {
+        "type": "checksum",
+        "output": "output/opensuse-13.2-x86_64-compress/"
       }
     ]
   ]
