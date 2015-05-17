@@ -32,7 +32,7 @@
         ],
         [
           "-drive",
-          "if=none,cache=unsafe,id=drive0,discard=unmap,file=output/opensuse-13.2-x86_64-qemu/opensuse-13.2-x86_64.raw"
+          "if=none,cache=unsafe,id=drive0,discard=unmap,file=output/opensuse-13.2-x86_64-qemu/opensuse-13.2-x86_64"
         ],
         [
           "-device",
