@@ -58,6 +58,7 @@
       {
         "type": "compress",
         "format": "bgzf",
+        "metadata": true,
         "output": "output/opensuse-13.2-x86_64-compress/"
       },
       {
