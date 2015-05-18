@@ -26,28 +26,12 @@
         [
           "-m",
           "768"
-        ],
-        [
-          "-device",
-          "virtio-scsi-pci,id=scsi0"
-        ],
-        [
-          "-drive",
-          "if=none,cache=unsafe,id=drive0,discard=unmap,file=output/opensuse-13.2-x86_64-qemu/opensuse-13.2-x86_64"
-        ],
-        [
-          "-device",
-          "scsi-hd,bus=scsi0.0,drive=drive0"
-        ],
-        [
-          "-device",
-          "virtio-net,netdev=user.0"
         ]
       ],
       "shutdown_command": "",
       "ssh_password": "packer",
       "ssh_username": "root",
-      "ssh_wait_timeout": "10000s",
+      "ssh_wait_timeout": "1200s",
       "type": "qemu",
       "vm_name": "opensuse-13.2-x86_64"
     }
