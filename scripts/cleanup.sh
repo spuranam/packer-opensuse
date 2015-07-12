@@ -4,4 +4,3 @@ rm -rf /tmp/*
 
 sync
 fstrim  -v /
-systemctl poweroff
