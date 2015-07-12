@@ -2,6 +2,7 @@
 <!DOCTYPE profile>
 <!-- based on https://github.com/crowbar/crowbar/blob/master/opensuse-13.1-extra/autoinst.xml -->
 <profile xmlns="http://www.suse.com/1.0/yast2ns" xmlns:config="http://www.suse.com/1.0/configns">
+<!--
   <add-on>
     <add_on_products config:type="list">
       <listentry>
@@ -11,7 +12,7 @@
       </listentry>
     </add_on_products>
   </add-on>
-  
+-->
   <bootloader>
     <device_map config:type="list"/>
     <global>
@@ -77,7 +78,7 @@
     <interfaces config:type="list">
       <interface>
         <bootproto>dhcp</bootproto>
-        <device>eth0</device>        
+        <device>eth0</device>
         <startmode>onboot</startmode>
       </interface>
     </interfaces>
@@ -170,7 +171,7 @@
       <chrooted config:type="boolean">true</chrooted>
       <source><![CDATA[#!/bin/sh
 rm -f /etc/udev/rules.d/70-persistent-net.rules
-mkdir /etc/udev/rules.d/70-persistent-net.rules
+#mkdir /etc/udev/rules.d/70-persistent-net.rules
 rm -f /lib/udev/rules.d/75-persistent-net-generator.rules
 rm -rf /dev/.udev/ /var/lib/dhcpcd/*
 ]]></source>
