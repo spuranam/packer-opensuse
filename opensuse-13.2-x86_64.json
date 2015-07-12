@@ -28,7 +28,7 @@
           "768"
         ]
       ],
-      "shutdown_command": "",
+      "shutdown_command": "systemctl poweroff",
       "ssh_password": "packer",
       "ssh_username": "root",
       "ssh_wait_timeout": "1200s",

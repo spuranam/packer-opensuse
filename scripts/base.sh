@@ -10,7 +10,3 @@ zypper ar -t rpm-md -c -n opensuse-13.2-update -g -f http://download.opensuse.or
 zypper ar -t rpm-md -c -n opensuse-13.2-update-non-oss  -g -f http://download.opensuse.org/update/13.2-non-oss/ opensuse-13.2-update-non-oss
 zypper refresh
 zypper update -y --auto-agree-with-licenses --force-resolution
-systemctl enable sshd
-systemctl enable wicked
-echo "UseDNS no" >> /etc/ssh/sshd_config
-echo "GSSAPIAuthentication no" >> /etc/ssh/sshd_config

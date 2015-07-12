@@ -184,8 +184,21 @@ rm -rf /dev/.udev/ /var/lib/dhcpcd/*
         <interpreter>shell</interpreter>
         <source><![CDATA[#!/bin/sh
 rm /etc/sysconfig/network/ifcfg-enp*
-service wicked restart
+systemctl enable sshd
+systemctl mask wicked.service
+systemctl mask wickedd-auto4.service
+systemctl mask wickedd-dhcp4.service
+systemctl mask wickedd-dhcp6.service
+systemctl mask wickedd-nanny.service
+systemctl mask wickedd.service
+zypper in --no-recommends networkmanager
+systemctl --force enable NetworkManager.service
+systemctl stop network.service || true
+systemctl stop wickedd.service || true
+echo "UseDNS no" >> /etc/ssh/sshd_config
+echo "GSSAPIAuthentication no" >> /etc/ssh/sshd_config
 service sshd restart
+systemctl start network.service || true
 ]]></source>
       </script>
     </init-scripts>
