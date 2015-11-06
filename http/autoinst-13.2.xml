@@ -191,7 +191,7 @@ systemctl mask wickedd-dhcp4.service
 systemctl mask wickedd-dhcp6.service
 systemctl mask wickedd-nanny.service
 systemctl mask wickedd.service
-zypper in --no-recommends networkmanager
+zypper --non-interactive in --no-recommends networkmanager
 systemctl --force enable NetworkManager.service
 systemctl stop network.service || true
 systemctl stop wickedd.service || true
