@@ -197,6 +197,7 @@ systemctl stop network.service || true
 systemctl stop wickedd.service || true
 echo "UseDNS no" >> /etc/ssh/sshd_config
 echo "GSSAPIAuthentication no" >> /etc/ssh/sshd_config
+sed -i -e 's|*.PermitRootLogin.*|PermitRootLogin yes|g' /etc/ssh/sshd_config
 service sshd restart
 systemctl start network.service || true
 ]]></source>
