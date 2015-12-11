@@ -1,0 +1,75 @@
+{
+  "builders": [
+    {
+      "accelerator": "kvm",
+      "boot_command": [
+        "<esc><enter><wait>",
+        "linux netsetup=dhcp lang=en_US hostname=build  netdevice=eth0",
+        " autoyast=http://{{.HTTPIP}}:{{.HTTPPort}}/autoinst-tumbleweed.xml",
+        " textmode=1 insecure=1<wait><enter><wait>"
+      ],
+      "boot_wait": "10s",
+      "disk_interface": "virtio-scsi",
+      "disk_size": 5000,
+      "disk_cache": "unsafe",
+      "disk_discard": "unmap",
+      "format": "raw",
+      "headless": true,
+      "http_directory": "http",
+      "iso_checksum": "http://download.opensuse.org/tumbleweed/iso/openSUSE-Tumbleweed-NET-i586-Current.iso.sha256",
+      "iso_checksum_type": "sha256",
+      "iso_url": "http://mirror.yandex.ru/opensuse/tumbleweed/iso/openSUSE-Tumbleweed-NET-i586-Current.iso",
+      "net_device": "virtio-net",
+      "output_directory": "output/opensuse-tumbleweed-x86_32-qemu",
+      "machine_type": "pc-i440fx-1.7",
+      "qemuargs": [
+        [
+          "-m",
+          "768"
+        ]
+      ],
+      "shutdown_command": "systemctl poweroff",
+      "ssh_password": "packer",
+      "ssh_username": "root",
+      "ssh_wait_timeout": "1200s",
+      "type": "qemu",
+      "vm_name": "opensuse-tumbleweed-x86_32"
+    }
+  ],
+  "provisioners": [
+    {
+      "scripts": [
+        "scripts/base.sh",
+        "scripts/reboot.sh"
+      ],
+      "type": "shell"
+    },
+    {
+      "scripts": [
+        "scripts/cloudinit.sh",
+        "scripts/cleanup.sh"
+      ],
+      "pause_before": "30s",
+      "type": "shell"
+    },
+    {
+      "type": "file",
+      "source": "files/80-hotplug-cpu-mem.rules",
+      "destination": "/etc/udev/rules.d/80-hotplug-cpu-mem.rules"
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "compress",
+        "format": "bgzf",
+        "metadata": true,
+        "output": "output/opensuse-tumbleweed-x86_32-compress/"
+      },
+      {
+        "type": "checksum",
+        "output": "output/opensuse-tumbleweed-x86_32-compress/"
+      }
+    ]
+  ]
+}

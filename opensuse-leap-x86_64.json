@@ -1,0 +1,76 @@
+{
+  "builders": [
+    {
+      "accelerator": "kvm",
+      "boot_command": [
+        "<esc><enter><wait>",
+        " linux netdevice=eth0 netsetup=dhcp lang=en_US hostname=build <wait>",
+        " install=http://mirror.yandex.ru/opensuse/distribution/leap/42.1/repo/oss/ <wait>",
+        " autoyast=http://{{.HTTPIP}}:{{.HTTPPort}}/autoinst-leap.xml",
+        " textmode=1 insecure=1<wait><enter><wait>"
+      ],
+      "boot_wait": "10s",
+      "disk_interface": "virtio-scsi",
+      "disk_size": 5000,
+      "disk_cache": "unsafe",
+      "disk_discard": "unmap",
+      "format": "raw",
+      "headless": true,
+      "http_directory": "http",
+      "iso_checksum": "http://mirror.yandex.ru/opensuse/distribution/leap/42.1/iso/openSUSE-Leap-42.1-DVD-x86_64.iso.sha256",
+      "iso_checksum_type": "sha256",
+      "iso_urls": [ "http://mirror.yandex.ru/opensuse/distribution/leap/42.1/iso/openSUSE-Leap-42.1-DVD-x86_64.iso" ],
+      "net_device": "virtio-net",
+      "output_directory": "output/opensuse-leap-x86_64-qemu",
+      "machine_type": "pc-i440fx-1.7",
+      "qemuargs": [
+        [
+          "-m",
+          "1280"
+        ]
+      ],
+      "shutdown_command": "systemctl poweroff",
+      "ssh_password": "packer",
+      "ssh_username": "root",
+      "ssh_wait_timeout": "1200s",
+      "type": "qemu",
+      "vm_name": "opensuse-leap-x86_64"
+    }
+  ],
+  "provisioners": [
+    {
+      "scripts": [
+        "scripts/base.sh",
+        "scripts/reboot.sh"
+      ],
+      "type": "shell"
+    },
+    {
+      "scripts": [
+        "scripts/cloudinit.sh",
+        "scripts/cleanup.sh"
+      ],
+      "pause_before": "30s",
+      "type": "shell"
+    },
+    {
+      "type": "file",
+      "source": "files/80-hotplug-cpu-mem.rules",
+      "destination": "/etc/udev/rules.d/80-hotplug-cpu-mem.rules"
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "compress",
+        "format": "bgzf",
+        "metadata": true,
+        "output": "output/opensuse-leap-x86_64-compress/"
+      },
+      {
+        "type": "checksum",
+        "output": "output/opensuse-leap-x86_64-compress/"
+      }
+    ]
+  ]
+}
