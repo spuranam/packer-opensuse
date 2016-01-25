@@ -257,7 +257,7 @@
   <scripts>
     <chroot-scripts config:type="list">
       <script>
-        <filename>newrename.sh</filename>
+        <filename>80-net-setup-link.sh</filename>
         <interpreter>shell</interpreter>
         <source>ln -sf /dev/null /etc/udev/rules.d/80-net-setup-link.rules</source>
         <feedback config:type="boolean">false</feedback>
@@ -265,9 +265,21 @@
         <chrooted config:type="boolean">true</chrooted>
       </script>
       <script>
-        <filename>oldrename.sh</filename>
+        <filename>80-net-name-slot.sh</filename>
         <interpreter>shell</interpreter>
         <source>ln -sf /dev/null /etc/udev/rules.d/80-net-name-slot.rules</source>
+        <feedback config:type="boolean">false</feedback>
+        <debug config:type="boolean">true</debug>
+        <chrooted config:type="boolean">true</chrooted>
+      </script>
+      <script>
+        <filename>sshd_config.sh</filename>
+        <interpreter>shell</interpreter>
+        <source>
+          echo "UseDNS no" >> /etc/ssh/sshd_config
+          echo "GSSAPIAuthentication no" >> /etc/ssh/sshd_config
+          sed -i -e 's|*.PermitRootLogin.*|PermitRootLogin yes|g' /etc/ssh/sshd_config
+        </source>
         <feedback config:type="boolean">false</feedback>
         <debug config:type="boolean">true</debug>
         <chrooted config:type="boolean">true</chrooted>

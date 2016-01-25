@@ -1,6 +1,0 @@
-{
-  "post-processors": {
-    "compress": "packer-post-processor-compress",
-    "checksum": "packer-post-processor-checksum"
-  }
-}

@@ -14,11 +14,11 @@
       "disk_size": 5000,
       "disk_cache": "unsafe",
       "disk_discard": "unmap",
-      "format": "raw",
+      "disk_compression": true,
+      "iso_skip_cache": true,
+      "format": "qcow2",
       "headless": true,
       "http_directory": "http",
-      "iso_checksum": "http://mirror.yandex.ru/opensuse/distribution/leap/42.1/iso/openSUSE-Leap-42.1-DVD-x86_64.iso.sha256",
-      "iso_checksum_type": "sha256",
       "iso_urls": [ "http://mirror.yandex.ru/opensuse/distribution/leap/42.1/iso/openSUSE-Leap-42.1-DVD-x86_64.iso" ],
       "net_device": "virtio-net",
       "output_directory": "output/opensuse-leap-x86_64-qemu",
@@ -58,19 +58,5 @@
       "source": "files/80-hotplug-cpu-mem.rules",
       "destination": "/etc/udev/rules.d/80-hotplug-cpu-mem.rules"
     }
-  ],
-  "post-processors": [
-    [
-      {
-        "type": "compress",
-        "format": "bgzf",
-        "metadata": true,
-        "output": "output/opensuse-leap-x86_64-compress/"
-      },
-      {
-        "type": "checksum",
-        "output": "output/opensuse-leap-x86_64-compress/"
-      }
-    ]
   ]
 }
